@@ -1,0 +1,20 @@
+:root {
+    --primary: #FFD700; 
+    --accent: #007FFF;
+    --secondary: #228B22; 
+    --background-light: #FFFFFF; 
+    --background-dark: #F5F5F5; 
+    --text-dark: #333333;
+    --text-light: #FFFFFF; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    height: 100vh;
+}
