@@ -1,5 +1,5 @@
 import { Card, TextField } from "@mui/material";
-import style from "./Login.module.scss";
+import style from "../../styles/Form.module.scss";
 import { CustomError, LoginData } from "../../utils/interfaces";
 import { Link, useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
@@ -13,7 +13,7 @@ import { setToken } from "../../slices/tokenSlice";
 import { enqueueSnackbar } from "notistack";
 
 const schema = yup.object().shape({
-  email: yup.string().required("Obrigatório").email("Email inválido."),
+  email: yup.string().required("Obrigatório").email("Email inválido"),
   password: yup.string().required("Obrigatório"),
 });
 
@@ -42,7 +42,7 @@ export default function Login() {
   useEffect(() => {
     if (isSuccess) {
       dispatch(setToken(data.token));
-      enqueueSnackbar("Bem vindo!", { variant: "success" });
+      enqueueSnackbar("Bem-vindo!", { variant: "success" });
       navigate("/");
     }
     if (isError) {
@@ -101,9 +101,9 @@ export default function Login() {
                 </LoadingButton>
 
                 <div className={style.formLinks}>
-                  <p className={style.forgetPassword}>
+                  <p className={style.haveAccount}>
                     Não possui uma conta?{" "}
-                    <Link to={"/register"} className={style.links}>
+                    <Link to={"/register"} className={style.link}>
                       Cadastre-se
                     </Link>
                   </p>
