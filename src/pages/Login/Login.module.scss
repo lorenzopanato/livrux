@@ -1,0 +1,52 @@
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+
+  .loginContainer {
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+
+    .title {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+    }
+
+    .subtitle {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background-color: white !important;
+      .form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1rem;
+
+        .field {
+          .input {
+            width: 100%;
+          }
+          p {
+            color: red;
+            text-align: start;
+            margin-top: 4px;
+          }
+        }
+
+        .buttonLogin {
+          width: 60%;
+          margin: auto;
+        }
+      }
+    }
+  }
+}
