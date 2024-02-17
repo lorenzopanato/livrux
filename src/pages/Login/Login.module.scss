@@ -12,13 +12,15 @@
     text-align: center;
 
     .title {
-      color: var(--primary);
+      color: var(--text-dark);
+      text-decoration: underline var(--primary);
       font-weight: 700;
       margin-bottom: 20px;
       font-size: 2.5rem;
     }
 
     .subtitle {
+      color: var(--text-dark);
       font-size: 2rem;
       margin-bottom: 20px;
     }
