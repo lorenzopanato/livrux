@@ -1,15 +1,17 @@
-import {
-  Basket,
-  BookBookmark,
-  FilmSlate,
-  ShoppingCart,
-  SignOut,
-  User,
-} from "@phosphor-icons/react";
+import { Basket, BookBookmark, SignOut } from "@phosphor-icons/react";
 import style from "./Header.module.scss";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { removeToken } from "../../slices/tokenSlice";
 
 export default function Header() {
+  const token = useAppSelector((state) => state.token.token);
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(removeToken());
+  };
+
   return (
     <>
       <header className={style.header}>
@@ -20,19 +22,18 @@ export default function Header() {
               Livrux
             </Link>
           </div>
-          <div className={style.links}>
-            <Link to={"/login"} className={style.navItem}>
-              <User size={32} />
-              Entrar
-            </Link>
-            <Link to={"/cart"} className={style.navItem}>
-              <Basket size={32} />
-              Carrinho
-            </Link>
-            {/* <button className={style.logoutButton}>
-              Sair <SignOut size={22} className={style.icon} />
-            </button> */}
-          </div>
+          {token && (
+            <div className={style.links}>
+              <Link to={"/cart"} className={style.navItem}>
+                <Basket size={28} />
+                Carrinho
+              </Link>
+              <button className={style.navItem} onClick={handleLogout}>
+                <SignOut size={28} />
+                Sair
+              </button>
+            </div>
+          )}
         </div>
       </header>
     </>
