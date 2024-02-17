@@ -3,9 +3,14 @@ import style from "../../styles/Form.module.scss";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { RegisterData } from "../../utils/interfaces";
+import { CustomError, LoginData, RegisterData } from "../../utils/interfaces";
 import { LoadingButton } from "@mui/lab";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRegisterMutation } from "../../Services/registerApi";
+import { useEffect } from "react";
+import { enqueueSnackbar } from "notistack";
+import { useAppDispatch } from "../../hooks/hooks";
+import { setToken } from "../../slices/tokenSlice";
 
 const schema = yup.object().shape({
   email: yup.string().required("Obrigatório").email("Email inválido"),
@@ -13,6 +18,12 @@ const schema = yup.object().shape({
 });
 
 export default function Register() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const [registerUser, { data, isLoading, isSuccess, isError, error }] =
+    useRegisterMutation();
+
   const {
     register,
     handleSubmit,
@@ -21,9 +32,25 @@ export default function Register() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = () => {
-    
-  }
+  const onSubmit = async (registerData: LoginData) => {
+    try {
+      await registerUser(registerData);
+    } catch (error) {
+      console.log("Erro ao efetuar cadastro:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setToken(data.token));
+      enqueueSnackbar("Bem-vindo!", { variant: "success" });
+      navigate("/");
+    }
+    if (isError) {
+      const customError = error as CustomError;
+      enqueueSnackbar("Erro! " + customError.data.error, { variant: "error" });
+    }
+  }, [isSuccess, isError, error, data, navigate]);
 
   return (
     <>
@@ -67,7 +94,7 @@ export default function Register() {
                   size="large"
                   className={style.buttonLogin}
                   type="submit"
-                  //loading={isLoading}
+                  loading={isLoading}
                   loadingPosition="center"
                 >
                   Cadastrar

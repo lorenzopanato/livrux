@@ -42,7 +42,7 @@ export default function Login() {
   useEffect(() => {
     if (isSuccess) {
       dispatch(setToken(data.token));
-      enqueueSnackbar("Bem vindo!", { variant: "success" });
+      enqueueSnackbar("Bem-vindo!", { variant: "success" });
       navigate("/");
     }
     if (isError) {
