@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import {
   useFindAllBooksFavoriteQuery,
   useFindAllBooksGeekQuery,
@@ -10,9 +9,11 @@ import styles from "./Home.module.scss";
 import { Card } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { addCartBook } from "../../slices/cartSlice";
 
 export default function Home() {
   const searched = useSelector((state: RootState) => state.books.searched);
+  const dispatch = useAppDispatch();
 
   const {
     data: dataFavorite,
@@ -35,6 +36,10 @@ export default function Home() {
     error: errorSeries,
   } = useFindAllBooksSeriesQuery({});
 
+  const handleAddCart = (book: Book) => {
+    dispatch(addCartBook(book));
+  };
+
   if (isLoadingFavorite || isLoadingGeek || isLoadingSeries) {
     return <main className={styles.main}>Loading...</main>;
   }
@@ -48,95 +53,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      {searched.length === 0 ? (
-        <>
-          <h2>Mais Vendidos!</h2>
-          <div className={styles.scrollContainer}>
-            <div className={styles.containerCards}>
-              {dataFavorite.items.map((book: Book) => (
-                <Card
-                  key={book.id}
-                  className={styles.bookCard}
-                  variant="outlined"
-                >
-                  <img
-                    height="196"
-                    width="128"
-                    src={
-                      book.volumeInfo.imageLinks?.thumbnail ||
-                      "https://via.placeholder.com/140x210?text=No+Thumbnail"
-                    }
-                    alt={book.volumeInfo.title}
-                  />
-                  <h2>{book.volumeInfo.title}</h2>
-                  {book.saleInfo && book.saleInfo.listPrice && (
-                    <p>Preço: {book.saleInfo.listPrice.amount}$</p>
-                  )}
-                  <button className={styles.buttonBuy}>Comprar</button>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <h2>HQS!</h2>
-
-          <div className={styles.scrollContainer}>
-            <div className={styles.containerCards}>
-              {dataGeek.items.map((book: Book) => (
-                <Card
-                  key={book.id}
-                  className={styles.bookCard}
-                  variant="outlined"
-                >
-                  <img
-                    height="196"
-                    width="128"
-                    src={
-                      book.volumeInfo.imageLinks?.thumbnail ||
-                      "https://via.placeholder.com/140x210?text=No+Thumbnail"
-                    }
-                    alt={book.volumeInfo.title}
-                  />
-                  <h2>{book.volumeInfo.title}</h2>
-                  {book.saleInfo && book.saleInfo.listPrice && (
-                    <p>Preço: {book.saleInfo.listPrice.amount}$</p>
-                  )}
-                  <button className={styles.buttonBuy}>Comprar</button>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <h2>Harry Potter!</h2>
-
-          <div className={styles.scrollContainer}>
-            <div className={styles.containerCards}>
-              {dataSeries.items.map((book: Book) => (
-                <Card
-                  key={book.id}
-                  className={styles.bookCard}
-                  variant="outlined"
-                >
-                  <img
-                    height="196"
-                    width="128"
-                    src={
-                      book.volumeInfo.imageLinks?.thumbnail ||
-                      "https://via.placeholder.com/140x210?text=No+Thumbnail"
-                    }
-                    alt={book.volumeInfo.title}
-                  />
-                  <h2>{book.volumeInfo.title}</h2>
-                  {book.saleInfo && book.saleInfo.listPrice && (
-                    <p>Preço: {book.saleInfo.listPrice.amount}$</p>
-                  )}
-                  <button className={styles.buttonBuy}>Comprar</button>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </>
-      ) : (
+      {searched.length !== 0 && (
         <section>
           <h2>Sua busca</h2>
           <div className={styles.searchedCards}>
@@ -171,6 +88,121 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      <h2>Mais Vendidos!</h2>
+      <div className={styles.scrollContainer}>
+        <div className={styles.containerCards}>
+          {dataFavorite.items.map((book: Book) => (
+            <Card key={book.id} className={styles.bookCard} variant="outlined">
+              <img
+                height="196"
+                width="128"
+                src={
+                  book.volumeInfo.imageLinks?.thumbnail ||
+                  "https://via.placeholder.com/140x210?text=No+Thumbnail"
+                }
+                alt={book.volumeInfo.title}
+              />
+              <h2>{book.volumeInfo.title}</h2>
+              {book.saleInfo && book.saleInfo.listPrice ? (
+                <>
+                  <p>Preço: {book.saleInfo.listPrice.amount}$</p>
+                  <button
+                    className={styles.buttonBuy}
+                    onClick={() => handleAddCart(book)}
+                  >
+                    Comprar
+                  </button>
+                </>
+              ) : (
+                <button
+                  className={styles.buttonBuy}
+                  onClick={() => handleAddCart(book)}
+                  disabled
+                >
+                  Indisponível
+                </button>
+              )}
+            </Card>
+          ))}
+        </div>
+      </div>
+      <h2>HQS!</h2>
+      <div className={styles.scrollContainer}>
+        <div className={styles.containerCards}>
+          {dataGeek.items.map((book: Book) => (
+            <Card key={book.id} className={styles.bookCard} variant="outlined">
+              <img
+                height="196"
+                width="128"
+                src={
+                  book.volumeInfo.imageLinks?.thumbnail ||
+                  "https://via.placeholder.com/140x210?text=No+Thumbnail"
+                }
+                alt={book.volumeInfo.title}
+              />
+              <h2>{book.volumeInfo.title}</h2>
+              {book.saleInfo && book.saleInfo.listPrice ? (
+                <>
+                  <p>Preço: {book.saleInfo.listPrice.amount}$</p>
+                  <button
+                    className={styles.buttonBuy}
+                    onClick={() => handleAddCart(book)}
+                  >
+                    Comprar
+                  </button>
+                </>
+              ) : (
+                <button
+                  className={styles.buttonBuy}
+                  onClick={() => handleAddCart(book)}
+                  disabled
+                >
+                  Indisponível
+                </button>
+              )}
+            </Card>
+          ))}
+        </div>
+      </div>
+      <h2>Harry Potter!</h2>
+      <div className={styles.scrollContainer}>
+        <div className={styles.containerCards}>
+          {dataSeries.items.map((book: Book) => (
+            <Card key={book.id} className={styles.bookCard} variant="outlined">
+              <img
+                height="196"
+                width="128"
+                src={
+                  book.volumeInfo.imageLinks?.thumbnail ||
+                  "https://via.placeholder.com/140x210?text=No+Thumbnail"
+                }
+                alt={book.volumeInfo.title}
+              />
+              <h2>{book.volumeInfo.title}</h2>
+              {book.saleInfo && book.saleInfo.listPrice ? (
+                <>
+                  <p>Preço: {book.saleInfo.listPrice.amount}$</p>
+                  <button
+                    className={styles.buttonBuy}
+                    onClick={() => handleAddCart(book)}
+                  >
+                    Comprar
+                  </button>
+                </>
+              ) : (
+                <button
+                  className={styles.buttonBuy}
+                  onClick={() => handleAddCart(book)}
+                  disabled
+                >
+                  Indisponível
+                </button>
+              )}
+            </Card>
+          ))}
+        </div>
+      </div>
     </main>
   );
 }
