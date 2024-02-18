@@ -4,10 +4,12 @@ import tokenReducer from "../slices/tokenSlice";
 import cartReducer from "../slices/cartSlice";
 import { registerApi } from "../Services/registerApi";
 import { googleBooksApi } from "./../Services/googleBooksApi";
+import booksReducer from "../slices/booksSlice";
 
 export const store = configureStore({
   reducer: {
     token: tokenReducer,
+    books: booksReducer,
     cart: cartReducer,
     [loginApi.reducerPath]: loginApi.reducer,
     [registerApi.reducerPath]: registerApi.reducer,
