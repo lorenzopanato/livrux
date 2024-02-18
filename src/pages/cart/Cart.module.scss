@@ -1,0 +1,126 @@
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+
+  h2 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+  }
+
+  .Card {
+    padding: 1rem;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .itemContainer {
+    border-bottom: 1px solid #ccc;
+    padding: 1rem 0;
+  }
+
+  .itemInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .titleContainer,
+  .detailsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+      font-size: 1rem;
+    }
+
+    .price {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+  }
+
+  .title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .deleteButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .detailsContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .quantity,
+  .price {
+    margin-left: 0.5rem;
+  }
+
+  .totalPrice {
+    margin-block: 1rem;
+    font-weight: bold;
+  }
+
+  .checkoutButton {
+    margin-top: 10px;
+    width: 100%;
+    margin: auto;
+    background-color: var(--accent);
+    color: var(--text-light);
+    font-size: 1rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      opacity: 90%;
+    }
+
+    &:disabled {
+      background-color: var(--disabled-color);
+      cursor: not-allowed;
+    }
+  }
+
+  .emptyCart {
+    text-align: center;
+
+    p {
+      font-size: 1rem;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .goBackLink {
+      display: flex;
+      align-items: center;
+      color: var(--text-light);
+      justify-content: center;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      background-color: var(--accent);
+      border-radius: 4px;
+      padding: 8px 1rem;
+
+      svg {
+        margin-right: 0.5rem;
+      }
+
+      &:hover {
+        opacity: 90%;
+      }
+    }
+  }
+}
