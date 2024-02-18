@@ -19,11 +19,14 @@
 
     .bookDetails {
       flex: 1;
+      display: flex;
+      flex-direction: column;
 
       h1 {
         font-size: 2.1rem;
         font-weight: 600;
         margin-bottom: 15px;
+        color: var(--text-dark);
       }
 
       .bookInfo {
@@ -36,7 +39,7 @@
           display: flex;
           flex-direction: column;
           gap: 5px;
-  
+
           p {
             strong {
               font-weight: 600;
@@ -48,6 +51,41 @@
         a {
           color: var(--accent);
           font-size: 0.9rem;
+        }
+      }
+
+      h2 {
+        font-size: 1.6rem;
+        color: var(--text-dark);
+        margin-top: 40px;
+      }
+
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        justify-content: end;
+        gap: 10px;
+
+        button {
+          font-size: 1.1rem;
+          padding: 0.8rem;
+          border-radius: 4px;
+          transition: 0.2s;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.9;
+          }
+        }
+
+        .buyButton {
+          background-color: var(--accent);
+          color: var(--text-light);
+        }
+
+        .cartButton {
+          background-color: rgb(218, 218, 218);
         }
       }
     }

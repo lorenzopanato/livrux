@@ -24,6 +24,13 @@ export default function ProductDetails() {
               </div>
               <a href="#">Mais informações</a>
             </div>
+            <h2>R$ 82,90</h2>
+            <div className={style.buttons}>
+              <button className={style.buyButton}>Comprar</button>
+              <button className={style.cartButton}>
+                Adicionar ao carrinho
+              </button>
+            </div>
           </div>
         </section>
       </main>
