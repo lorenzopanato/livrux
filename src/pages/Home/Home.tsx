@@ -4,10 +4,12 @@ import {
   useFindAllBooksGeekQuery,
   useFindAllBooksSeriesQuery,
 } from "../../Services/googleBooksApi";
-import { useAppDispatch } from "../../hooks/hooks";
 import { Book } from "../../utils/interfaces";
 import styles from "./Home.module.scss";
 import { Card } from "@mui/material";
+import { useAppDispatch } from "../../hooks/hooks";
+import { addCartBook } from "../../slices/cartSlice";
+
 
 export default function Home() {
   const {
@@ -30,6 +32,12 @@ export default function Home() {
     isError: isErrorSeries,
     error: errorSeries,
   } = useFindAllBooksSeriesQuery({});
+
+  const dispatch = useAppDispatch();
+
+  const handleAddCart = (book: Book) => {
+    dispatch(addCartBook(book));
+  };
 
   if (isLoadingFavorite || isLoadingGeek || isLoadingSeries) {
     return <main className={styles.main}>Loading...</main>;
@@ -56,10 +64,25 @@ export default function Home() {
                 alt={book.volumeInfo.title}
               />
               <h2>{book.volumeInfo.title}</h2>
-              {book.saleInfo && book.saleInfo.listPrice && (
-                <p>Preço: {book.saleInfo.listPrice.amount}$</p>
+              {book.saleInfo && book.saleInfo.listPrice ? (
+                <>
+                  <p>Preço: {book.saleInfo.listPrice.amount}$</p>
+                  <button
+                    className={styles.buttonBuy}
+                    onClick={() => handleAddCart(book)}
+                  >
+                    Comprar
+                  </button>
+                </>
+              ) : (
+                <button
+                  className={styles.buttonBuy}
+                  onClick={() => handleAddCart(book)}
+                  disabled
+                >
+                  Indisponível
+                </button>
               )}
-              <button className={styles.buttonBuy}>Comprar</button>
             </Card>
           ))}
         </div>

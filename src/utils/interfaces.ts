@@ -14,6 +14,7 @@ export interface LoginData {
 
 export interface Book {
   id: string;
+  quantity: number;
   volumeInfo: {
     title: string;
     publishedDate: string;
