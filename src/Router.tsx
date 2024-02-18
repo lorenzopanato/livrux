@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import PublicRoute from "./components/publicRoute/PublicRoute";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import Cart from "./pages/cart/Cart";
+import BookDetails from "./pages/BookDetails/BookDetails";
 
 export default function Router() {
   return (
@@ -19,6 +20,7 @@ export default function Router() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Home />} />
+          <Route path="/product-details" element={<BookDetails />} />
           <Route path="/cart" element={<Cart />} />
         </Route>
       </Routes>
