@@ -56,7 +56,9 @@ export default function Cart() {
                   </select>
                   <span className={styles.price}>
                     Preço:{" "}
-                    {Number(book.saleInfo.listPrice?.amount) * book.quantity}
+                    {(
+                      Number(book.saleInfo.listPrice?.amount) * book.quantity
+                    ).toFixed(2)}
                   </span>
                 </div>
               </div>
