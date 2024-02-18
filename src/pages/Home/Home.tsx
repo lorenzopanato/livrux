@@ -8,8 +8,12 @@ import { useAppDispatch } from "../../hooks/hooks";
 import { Book } from "../../utils/interfaces";
 import styles from "./Home.module.scss";
 import { Card } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 export default function Home() {
+  const searched = useSelector((state: RootState) => state.books.searched);
+
   const {
     data: dataFavorite,
     isLoading: isLoadingFavorite,
@@ -39,77 +43,134 @@ export default function Home() {
     return <main className={styles.main}>Error</main>;
   }
 
+  const concatAllBooks = () =>
+    dataFavorite.items.concat(dataGeek.items, dataSeries.items);
+
   return (
     <main className={styles.main}>
-      <h2>Mais Vendidos!</h2>
-      <div className={styles.scrollContainer}>
-        <div className={styles.containerCards}>
-          {dataFavorite.items.map((book: Book) => (
-            <Card key={book.id} className={styles.bookCard} variant="outlined">
-              <img
-                height="196"
-                width="128"
-                src={
-                  book.volumeInfo.imageLinks?.thumbnail ||
-                  "https://via.placeholder.com/140x210?text=No+Thumbnail"
-                }
-                alt={book.volumeInfo.title}
-              />
-              <h2>{book.volumeInfo.title}</h2>
-              {book.saleInfo && book.saleInfo.listPrice && (
-                <p>Preço: {book.saleInfo.listPrice.amount}$</p>
-              )}
-              <button className={styles.buttonBuy}>Comprar</button>
-            </Card>
-          ))}
-        </div>
-      </div>
-      <h2>HQS!</h2>
-      <div className={styles.scrollContainer}>
-        <div className={styles.containerCards}>
-          {dataGeek.items.map((book: Book) => (
-            <Card key={book.id} className={styles.bookCard} variant="outlined">
-              <img
-                height="196"
-                width="128"
-                src={
-                  book.volumeInfo.imageLinks?.thumbnail ||
-                  "https://via.placeholder.com/140x210?text=No+Thumbnail"
-                }
-                alt={book.volumeInfo.title}
-              />
-              <h2>{book.volumeInfo.title}</h2>
-              {book.saleInfo && book.saleInfo.listPrice && (
-                <p>Preço: {book.saleInfo.listPrice.amount}$</p>
-              )}
-              <button className={styles.buttonBuy}>Comprar</button>
-            </Card>
-          ))}
-        </div>
-      </div>
-      <h2>Harry Potter!</h2>
-      <div className={styles.scrollContainer}>
-        <div className={styles.containerCards}>
-          {dataSeries.items.map((book: Book) => (
-            <Card key={book.id} className={styles.bookCard} variant="outlined">
-              <img
-                height="196"
-                width="128"
-                src={
-                  book.volumeInfo.imageLinks?.thumbnail ||
-                  "https://via.placeholder.com/140x210?text=No+Thumbnail"
-                }
-                alt={book.volumeInfo.title}
-              />
-              <h2>{book.volumeInfo.title}</h2>
-              {book.saleInfo && book.saleInfo.listPrice && (
-                <p>Preço: {book.saleInfo.listPrice.amount}$</p>
-              )}
-              <button className={styles.buttonBuy}>Comprar</button>
-            </Card>
-          ))}
-        </div>
-      </div>
+      {searched.length === 0 ? (
+        <>
+          <h2>Mais Vendidos!</h2>
+          <div className={styles.scrollContainer}>
+            <div className={styles.containerCards}>
+              {dataFavorite.items.map((book: Book) => (
+                <Card
+                  key={book.id}
+                  className={styles.bookCard}
+                  variant="outlined"
+                >
+                  <img
+                    height="196"
+                    width="128"
+                    src={
+                      book.volumeInfo.imageLinks?.thumbnail ||
+                      "https://via.placeholder.com/140x210?text=No+Thumbnail"
+                    }
+                    alt={book.volumeInfo.title}
+                  />
+                  <h2>{book.volumeInfo.title}</h2>
+                  {book.saleInfo && book.saleInfo.listPrice && (
+                    <p>Preço: {book.saleInfo.listPrice.amount}$</p>
+                  )}
+                  <button className={styles.buttonBuy}>Comprar</button>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <h2>HQS!</h2>
+
+          <div className={styles.scrollContainer}>
+            <div className={styles.containerCards}>
+              {dataGeek.items.map((book: Book) => (
+                <Card
+                  key={book.id}
+                  className={styles.bookCard}
+                  variant="outlined"
+                >
+                  <img
+                    height="196"
+                    width="128"
+                    src={
+                      book.volumeInfo.imageLinks?.thumbnail ||
+                      "https://via.placeholder.com/140x210?text=No+Thumbnail"
+                    }
+                    alt={book.volumeInfo.title}
+                  />
+                  <h2>{book.volumeInfo.title}</h2>
+                  {book.saleInfo && book.saleInfo.listPrice && (
+                    <p>Preço: {book.saleInfo.listPrice.amount}$</p>
+                  )}
+                  <button className={styles.buttonBuy}>Comprar</button>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <h2>Harry Potter!</h2>
+
+          <div className={styles.scrollContainer}>
+            <div className={styles.containerCards}>
+              {dataSeries.items.map((book: Book) => (
+                <Card
+                  key={book.id}
+                  className={styles.bookCard}
+                  variant="outlined"
+                >
+                  <img
+                    height="196"
+                    width="128"
+                    src={
+                      book.volumeInfo.imageLinks?.thumbnail ||
+                      "https://via.placeholder.com/140x210?text=No+Thumbnail"
+                    }
+                    alt={book.volumeInfo.title}
+                  />
+                  <h2>{book.volumeInfo.title}</h2>
+                  {book.saleInfo && book.saleInfo.listPrice && (
+                    <p>Preço: {book.saleInfo.listPrice.amount}$</p>
+                  )}
+                  <button className={styles.buttonBuy}>Comprar</button>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </>
+      ) : (
+        <section>
+          <h2>Sua busca</h2>
+          <div className={styles.searchedCards}>
+            {concatAllBooks()
+              .filter((book: Book) =>
+                book.volumeInfo.title
+                  .toLowerCase()
+                  .includes(searched.toLowerCase())
+              )
+              .map((book: Book) => (
+                <Card
+                  key={book.id}
+                  className={styles.bookCard}
+                  variant="outlined"
+                >
+                  <img
+                    height="196"
+                    width="128"
+                    src={
+                      book.volumeInfo.imageLinks?.thumbnail ||
+                      "https://via.placeholder.com/140x210?text=No+Thumbnail"
+                    }
+                    alt={book.volumeInfo.title}
+                  />
+                  <h2>{book.volumeInfo.title}</h2>
+                  {book.saleInfo && book.saleInfo.listPrice && (
+                    <p>Preço: {book.saleInfo.listPrice.amount}$</p>
+                  )}
+                  <button className={styles.buttonBuy}>Comprar</button>
+                </Card>
+              ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }
