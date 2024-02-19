@@ -49,7 +49,7 @@ export default function Home() {
     <main className={styles.main}>
       {searched.length !== 0 && (
         <section>
-          <h2>Sua busca</h2>
+          <h2 style={{ marginBottom: "15px" }}>Sua busca</h2>
           <div className={styles.scrollContainer}>
             <div className={styles.containerCards}>
               {concatAllBooks()
@@ -61,6 +61,11 @@ export default function Home() {
                 .map((book: Book) => (
                   <HomeCards book={book} key={book.id} />
                 ))}
+              {concatAllBooks().filter((book: Book) =>
+                book.volumeInfo.title
+                  .toLowerCase()
+                  .includes(searched.toLowerCase())
+              ).length === 0 && <p style={{ fontSize: '1.1rem' }}>Nenhum resultado encontrado para "{searched}". Por favor, verifique a ortografia e tente novamente.</p>}
             </div>
           </div>
         </section>

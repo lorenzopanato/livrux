@@ -5,10 +5,12 @@ import styles from "./HomeCards.module.scss";
 import { LoadingButton } from "@mui/lab";
 import { addCartBook } from "../../slices/cartSlice";
 import { useAppDispatch } from "../../hooks/hooks";
+import { useNavigate } from "react-router-dom";
 
 export default function HomeCards({ book }: { book: Book }) {
   const [isloadingButton, setIsLoadingButton] = useState(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleAddCart = (book: Book) => {
     dispatch(addCartBook(book));
@@ -35,6 +37,7 @@ export default function HomeCards({ book }: { book: Book }) {
               book.volumeInfo.imageLinks?.thumbnail ||
                 "https://via.placeholder.com/128x196?text=No+Thumbnail"
             )}
+            onClick={() => navigate(`/book-details/${book.id}`)}
             alt={book.volumeInfo.title}
           />
           <h2 tabIndex={0}>{book.volumeInfo.title}</h2>
