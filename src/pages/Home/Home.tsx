@@ -49,7 +49,9 @@ export default function Home() {
     <main className={styles.main}>
       {searched.length !== 0 && (
         <section>
-          <h2 style={{ marginBottom: "15px" }}>Sua busca</h2>
+          <h2 style={{ marginBottom: "15px" }} className={styles.titleHome}>
+            Sua busca
+          </h2>
           <div className={styles.scrollContainer}>
             <div className={styles.containerCards}>
               {concatAllBooks()
@@ -65,13 +67,18 @@ export default function Home() {
                 book.volumeInfo.title
                   .toLowerCase()
                   .includes(searched.toLowerCase())
-              ).length === 0 && <p style={{ fontSize: '1.1rem' }}>Nenhum resultado encontrado para "{searched}". Por favor, verifique a ortografia e tente novamente.</p>}
+              ).length === 0 && (
+                <p style={{ fontSize: "1.1rem" }}>
+                  Nenhum resultado encontrado para "{searched}". Por favor,
+                  verifique a ortografia e tente novamente.
+                </p>
+              )}
             </div>
           </div>
         </section>
       )}
 
-      <h2>Mais Vendidos!</h2>
+      <h2 className={styles.titleHome}>Mais Vendidos!</h2>
       <div className={styles.scrollContainer}>
         <div className={styles.containerCards}>
           {dataFavorite.items.map((book: Book) => (
@@ -79,7 +86,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <h2>HQS!</h2>
+      <h2 className={styles.titleHome}>HQS!</h2>
       <div className={styles.scrollContainer}>
         <div className={styles.containerCards}>
           {dataGeek.items.map((book: Book) => (
@@ -87,7 +94,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <h2>Harry Potter!</h2>
+      <h2 className={styles.titleHome}>Harry Potter!</h2>
       <div className={styles.scrollContainer}>
         <div className={styles.containerCards}>
           {dataSeries.items.map((book: Book) => (
