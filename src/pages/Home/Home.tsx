@@ -3,17 +3,15 @@ import {
   useFindAllBooksGeekQuery,
   useFindAllBooksSeriesQuery,
 } from "../../Services/googleBooksApi";
-import { useAppDispatch } from "../../hooks/hooks";
 import { Book } from "../../utils/interfaces";
 import styles from "./Home.module.scss";
-import { Card } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { addCartBook } from "../../slices/cartSlice";
+import HomeSkeleton from "./HomeSkeleton";
+import HomeCards from "../../components/Cards/HomeCards";
 
 export default function Home() {
   const searched = useSelector((state: RootState) => state.books.searched);
-  const dispatch = useAppDispatch();
 
   const {
     data: dataFavorite,
@@ -36,12 +34,8 @@ export default function Home() {
     error: errorSeries,
   } = useFindAllBooksSeriesQuery({});
 
-  const handleAddCart = (book: Book) => {
-    dispatch(addCartBook(book));
-  };
-
   if (isLoadingFavorite || isLoadingGeek || isLoadingSeries) {
-    return <main className={styles.main}>Loading...</main>;
+    return <HomeSkeleton></HomeSkeleton>;
   }
 
   if (isErrorFavorite || isErrorGeek || isErrorSeries) {
@@ -56,35 +50,18 @@ export default function Home() {
       {searched.length !== 0 && (
         <section>
           <h2>Sua busca</h2>
-          <div className={styles.searchedCards}>
-            {concatAllBooks()
-              .filter((book: Book) =>
-                book.volumeInfo.title
-                  .toLowerCase()
-                  .includes(searched.toLowerCase())
-              )
-              .map((book: Book) => (
-                <Card
-                  key={book.id}
-                  className={styles.bookCard}
-                  variant="outlined"
-                >
-                  <img
-                    height="196"
-                    width="128"
-                    src={
-                      book.volumeInfo.imageLinks?.thumbnail ||
-                      "https://via.placeholder.com/140x210?text=No+Thumbnail"
-                    }
-                    alt={book.volumeInfo.title}
-                  />
-                  <h2>{book.volumeInfo.title}</h2>
-                  {book.saleInfo && book.saleInfo.listPrice && (
-                    <p>Preço: {book.saleInfo.listPrice.amount}$</p>
-                  )}
-                  <button className={styles.buttonBuy}>Comprar</button>
-                </Card>
-              ))}
+          <div className={styles.scrollContainer}>
+            <div className={styles.containerCards}>
+              {concatAllBooks()
+                .filter((book: Book) =>
+                  book.volumeInfo.title
+                    .toLowerCase()
+                    .includes(searched.toLowerCase())
+                )
+                .map((book: Book) => (
+                  <HomeCards book={book} />
+                ))}
+            </div>
           </div>
         </section>
       )}
@@ -93,37 +70,7 @@ export default function Home() {
       <div className={styles.scrollContainer}>
         <div className={styles.containerCards}>
           {dataFavorite.items.map((book: Book) => (
-            <Card key={book.id} className={styles.bookCard} variant="outlined">
-              <img
-                height="196"
-                width="128"
-                src={
-                  book.volumeInfo.imageLinks?.thumbnail ||
-                  "https://via.placeholder.com/140x210?text=No+Thumbnail"
-                }
-                alt={book.volumeInfo.title}
-              />
-              <h2>{book.volumeInfo.title}</h2>
-              {book.saleInfo && book.saleInfo.listPrice ? (
-                <>
-                  <p>Preço: {book.saleInfo.listPrice.amount}$</p>
-                  <button
-                    className={styles.buttonBuy}
-                    onClick={() => handleAddCart(book)}
-                  >
-                    Comprar
-                  </button>
-                </>
-              ) : (
-                <button
-                  className={styles.buttonBuy}
-                  onClick={() => handleAddCart(book)}
-                  disabled
-                >
-                  Indisponível
-                </button>
-              )}
-            </Card>
+            <HomeCards book={book} key={book.id} />
           ))}
         </div>
       </div>
@@ -131,37 +78,7 @@ export default function Home() {
       <div className={styles.scrollContainer}>
         <div className={styles.containerCards}>
           {dataGeek.items.map((book: Book) => (
-            <Card key={book.id} className={styles.bookCard} variant="outlined">
-              <img
-                height="196"
-                width="128"
-                src={
-                  book.volumeInfo.imageLinks?.thumbnail ||
-                  "https://via.placeholder.com/140x210?text=No+Thumbnail"
-                }
-                alt={book.volumeInfo.title}
-              />
-              <h2>{book.volumeInfo.title}</h2>
-              {book.saleInfo && book.saleInfo.listPrice ? (
-                <>
-                  <p>Preço: {book.saleInfo.listPrice.amount}$</p>
-                  <button
-                    className={styles.buttonBuy}
-                    onClick={() => handleAddCart(book)}
-                  >
-                    Comprar
-                  </button>
-                </>
-              ) : (
-                <button
-                  className={styles.buttonBuy}
-                  onClick={() => handleAddCart(book)}
-                  disabled
-                >
-                  Indisponível
-                </button>
-              )}
-            </Card>
+            <HomeCards book={book} key={book.id} />
           ))}
         </div>
       </div>
@@ -169,37 +86,7 @@ export default function Home() {
       <div className={styles.scrollContainer}>
         <div className={styles.containerCards}>
           {dataSeries.items.map((book: Book) => (
-            <Card key={book.id} className={styles.bookCard} variant="outlined">
-              <img
-                height="196"
-                width="128"
-                src={
-                  book.volumeInfo.imageLinks?.thumbnail ||
-                  "https://via.placeholder.com/140x210?text=No+Thumbnail"
-                }
-                alt={book.volumeInfo.title}
-              />
-              <h2>{book.volumeInfo.title}</h2>
-              {book.saleInfo && book.saleInfo.listPrice ? (
-                <>
-                  <p>Preço: {book.saleInfo.listPrice.amount}$</p>
-                  <button
-                    className={styles.buttonBuy}
-                    onClick={() => handleAddCart(book)}
-                  >
-                    Comprar
-                  </button>
-                </>
-              ) : (
-                <button
-                  className={styles.buttonBuy}
-                  onClick={() => handleAddCart(book)}
-                  disabled
-                >
-                  Indisponível
-                </button>
-              )}
-            </Card>
+            <HomeCards book={book} key={book.id} />
           ))}
         </div>
       </div>
