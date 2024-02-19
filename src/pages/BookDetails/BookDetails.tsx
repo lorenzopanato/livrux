@@ -82,12 +82,6 @@ export default function BookDetails() {
                   {book.volumeInfo.publishedDate.split("-")[0]}
                 </p>
                 <p>
-                  <strong>Dimensões: </strong>
-                  {book.volumeInfo.dimensions.height} x{" "}
-                  {book.volumeInfo.dimensions.width} x{" "}
-                  {book.volumeInfo.dimensions.thickness}
-                </p>
-                <p>
                   <strong>Mais informações: </strong>
                   <a href={book.volumeInfo.infoLink} target="_blank">{book.volumeInfo.infoLink}</a>
                 </p>

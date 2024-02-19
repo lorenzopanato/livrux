@@ -8,7 +8,6 @@ import style from "./Header.module.scss";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { removeToken } from "../../slices/tokenSlice";
-import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { searchBooks } from "../../slices/booksSlice";
 
@@ -57,6 +56,17 @@ export default function Header() {
             </div>
           )}
         </div>
+        {token && (
+          <div className={style.searchBarMobile}>
+            <MagnifyingGlass size={23} color="var(--text-dark)" />
+            <InputBase
+              placeholder="O que você está procurando?"
+              sx={{ width: "100%" }}
+              inputProps={{ "aria-label": "search" }}
+              onChange={handleSearch}
+            />
+          </div>
+        )}
       </header>
     </>
   );
