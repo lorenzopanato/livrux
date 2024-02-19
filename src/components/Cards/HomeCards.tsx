@@ -40,7 +40,7 @@ export default function HomeCards({ book }: { book: Book }) {
             onClick={() => navigate(`/book-details/${book.id}`)}
             alt={book.volumeInfo.title}
           />
-          <h2 tabIndex={0}>{book.volumeInfo.title}</h2>
+          <h2 tabIndex={0} className={styles.title}>{book.volumeInfo.title}</h2>
           {book.saleInfo && book.saleInfo.listPrice ? (
             <>
               <p>Preço: {book.saleInfo.listPrice.amount}$</p>
