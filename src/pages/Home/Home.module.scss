@@ -55,6 +55,10 @@
     width: 250px;
     gap: 16px;
     padding: 16px;
+
+    img {
+      cursor: pointer;
+    }
   }
 
   .buttonBuy {

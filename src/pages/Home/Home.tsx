@@ -10,10 +10,12 @@ import { Card } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { addCartBook } from "../../slices/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const searched = useSelector((state: RootState) => state.books.searched);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const {
     data: dataFavorite,
@@ -82,7 +84,7 @@ export default function Home() {
                   {book.saleInfo && book.saleInfo.listPrice && (
                     <p>Preço: {book.saleInfo.listPrice.amount}$</p>
                   )}
-                  <button className={styles.buttonBuy}>Comprar</button>
+                  <button className={styles.buttonBuy} onClick={() => console.log(book)}>Comprar</button>
                 </Card>
               ))}
           </div>
@@ -97,6 +99,7 @@ export default function Home() {
               <img
                 height="196"
                 width="128"
+                onClick={() => navigate(`/book-details/${book.id}`)}
                 src={
                   book.volumeInfo.imageLinks?.thumbnail ||
                   "https://via.placeholder.com/140x210?text=No+Thumbnail"
@@ -135,6 +138,7 @@ export default function Home() {
               <img
                 height="196"
                 width="128"
+                onClick={() => navigate(`/book-details/${book.id}`)}
                 src={
                   book.volumeInfo.imageLinks?.thumbnail ||
                   "https://via.placeholder.com/140x210?text=No+Thumbnail"
@@ -173,6 +177,7 @@ export default function Home() {
               <img
                 height="196"
                 width="128"
+                onClick={() => navigate(`/book-details/${book.id}`)}
                 src={
                   book.volumeInfo.imageLinks?.thumbnail ||
                   "https://via.placeholder.com/140x210?text=No+Thumbnail"

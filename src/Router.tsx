@@ -20,7 +20,7 @@ export default function Router() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Home />} />
-          <Route path="/product-details" element={<BookDetails />} />
+          <Route path="/book-details/:id" element={<BookDetails />} />
           <Route path="/cart" element={<Cart />} />
         </Route>
       </Routes>
