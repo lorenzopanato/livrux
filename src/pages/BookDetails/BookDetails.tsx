@@ -1,12 +1,21 @@
 import { useGetBookByIdQuery } from "../../Services/googleBooksApi";
 import style from "./BookDetails.module.scss";
 import { useParams } from "react-router-dom";
+import BookDetailsSkeleton from "./BookDetailsSkeleton";
 
 export default function BookDetails() {
   const { id } = useParams();
-  const { data: book } = useGetBookByIdQuery(id);
+  const { data: book, isLoading, isError } = useGetBookByIdQuery(id);
 
-  console.log(book);
+  console.log(isLoading);
+
+  if (isLoading) {
+    return <BookDetailsSkeleton></BookDetailsSkeleton>;
+  }
+
+  if (isError) {
+    return <main className={style.main}>Erro</main>;
+  }
 
   return (
     <>
@@ -18,7 +27,7 @@ export default function BookDetails() {
                 book.volumeInfo.imageLinks?.thumbnail ||
                 "https://via.placeholder.com/140x210?text=No+Thumbnail"
               }
-              alt="..."
+              alt={"capa do livro " + book.volumeInfo.title}
             />
             <div className={style.bookDetails}>
               <p>
