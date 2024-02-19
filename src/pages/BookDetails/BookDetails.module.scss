@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 6rem 1rem;
+  padding: 6rem 2rem;
 
   .buySection {
     display: flex;
@@ -68,7 +68,7 @@
         h2 {
           font-size: 2rem;
           color: var(--text-dark);
-          margin-top: 5px;
+          margin: 5px 0;
         }
       }
 
@@ -138,8 +138,11 @@
     }
 
     .detailsContainer {
+      max-width: 100%;
+
       .details {
         padding: 0.9rem 1.1rem;
+        overflow-x: hidden;
 
         p {
           margin-bottom: 0.7rem;
@@ -154,5 +157,12 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 760px) {
+  .buySection, .detailsSection {
+    flex-direction: column;
+    align-items: center;
   }
 }
