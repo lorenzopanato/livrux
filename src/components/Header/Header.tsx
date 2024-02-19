@@ -56,6 +56,17 @@ export default function Header() {
             </div>
           )}
         </div>
+        {token && (
+          <div className={style.searchBarMobile}>
+            <MagnifyingGlass size={23} color="var(--text-dark)" />
+            <InputBase
+              placeholder="O que você está procurando?"
+              sx={{ width: "100%" }}
+              inputProps={{ "aria-label": "search" }}
+              onChange={handleSearch}
+            />
+          </div>
+        )}
       </header>
     </>
   );
