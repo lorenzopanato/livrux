@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import PublicRoute from "./components/publicRoute/PublicRoute";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import Cart from "./pages/cart/Cart";
+import Footer from "./components/footer/Footer";
 
 export default function Router() {
   return (
@@ -22,6 +23,7 @@ export default function Router() {
           <Route path="/cart" element={<Cart />} />
         </Route>
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
