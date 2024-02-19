@@ -59,7 +59,7 @@ export default function Home() {
                     .includes(searched.toLowerCase())
                 )
                 .map((book: Book) => (
-                  <HomeCards book={book} />
+                  <HomeCards book={book} key={book.id} />
                 ))}
             </div>
           </div>
