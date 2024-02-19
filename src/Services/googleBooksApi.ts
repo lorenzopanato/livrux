@@ -18,6 +18,9 @@ export const googleBooksApi = createApi({
       query: () =>
         "volumes?q=harrypotterand&maxResults=10&filter=paid-ebooks&orderBy=relevance",
     }),
+    getBookById: builder.query({
+      query: (id) => `volumes/${id}`
+    }),
   }),
 });
 
@@ -25,4 +28,5 @@ export const {
   useFindAllBooksFavoriteQuery,
   useFindAllBooksGeekQuery,
   useFindAllBooksSeriesQuery,
+  useGetBookByIdQuery,
 } = googleBooksApi;
