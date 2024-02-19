@@ -2,12 +2,27 @@ import { useGetBookByIdQuery } from "../../Services/googleBooksApi";
 import style from "./BookDetails.module.scss";
 import { useParams } from "react-router-dom";
 import BookDetailsSkeleton from "./BookDetailsSkeleton";
+import { Book } from "../../utils/interfaces";
+import { useState } from "react";
+import { LoadingButton } from "@mui/lab";
+import { addCartBook } from "../../slices/cartSlice";
+import { useAppDispatch } from "../../hooks/hooks";
 
 export default function BookDetails() {
+  const [isloadingButton, setIsLoadingButton] = useState(false);
   const { id } = useParams();
   const { data: book, isLoading, isError } = useGetBookByIdQuery(id);
+  const dispatch = useAppDispatch();
 
-  console.log(isLoading);
+  const handleAddCart = (book: Book) => {
+    dispatch(addCartBook(book));
+  };
+
+  const handleClick = (book: Book) => {
+    setIsLoadingButton(true);
+    setTimeout(() => setIsLoadingButton(false), 500);
+    handleAddCart(book);
+  };
 
   if (isLoading) {
     return <BookDetailsSkeleton></BookDetailsSkeleton>;
@@ -53,10 +68,15 @@ export default function BookDetails() {
                 <h2>{book.saleInfo.listPrice.amount} $</h2>
               </div>
               <div className={style.buttons}>
-                <button className={style.buyButton}>Comprar</button>
-                <button className={style.cartButton}>
+                <button className={style.buyButton}>COMPRAR</button>
+                <LoadingButton
+                  className={style.cartButton}
+                  loading={isloadingButton}
+                  loadingPosition="center"
+                  onClick={() => handleClick(book)}
+                >
                   Adicionar ao carrinho
-                </button>
+                </LoadingButton>
               </div>
             </div>
           </section>
@@ -92,7 +112,9 @@ export default function BookDetails() {
                 </p>
                 <p>
                   <strong>Mais informações: </strong>
-                  <a href={book.volumeInfo.infoLink} target="_blank">{book.volumeInfo.infoLink}</a>
+                  <a href={book.volumeInfo.infoLink} target="_blank">
+                    {book.volumeInfo.infoLink}
+                  </a>
                 </p>
               </div>
             </div>
