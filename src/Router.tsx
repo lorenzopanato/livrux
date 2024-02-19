@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import Cart from "./pages/cart/Cart";
 import Footer from "./components/footer/Footer";
 import BookDetails from "./pages/BookDetails/BookDetails";
+import PageNotFound from "./pages/pageNotFound/PageNotFound";
 
 export default function Router() {
   return (
@@ -24,6 +25,8 @@ export default function Router() {
           <Route path="/book-details/:id" element={<BookDetails />} />
           <Route path="/cart" element={<Cart />} />
         </Route>
+
+        <Route path="/*" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>
